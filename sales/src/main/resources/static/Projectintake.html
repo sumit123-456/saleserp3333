@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales ERP Dashboard</title>
+     <link rel="icon" href="assets/img/Logo_English.png"
+    type="image/png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Favicon (classic solid globe like in your image) -->
+  <link rel="icon" href="https://img.icons8.com/?size=100&id=undefined&format=png&color=000000" type="image/png">
+  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+  <link rel="stylesheet" href="assets/CSS/projectintake.css">
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div id="wrapper">
+    <nav id="sidebar" class="bg-dark text-white p-3">
+      <div class="text-center mb-4">
+        <img src="assets/img/Logo_English.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
+      </div>
+      <ul class="nav flex-column" id="sidebarMenu">
+        <li class="nav-item" id="menu-dashboard">
+          <a href="index.html" class="nav-link text-white">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item" id="menu-employee">
+          <a href="Employee.html" class="nav-link text-white">
+            <i class="bi bi-people-fill me-2"></i> Employees
+          </a>
+        </li>
+
+        <li class="nav-item" id="menu-project-leads">
+          <a href="ProjectLead.html" class="nav-link text-white">
+            <i class="bi bi-clipboard-check me-2"></i> Projects Leads
+          </a>
+        </li>
+
+        <li class="nav-item" id="menu-project-intake">
+          <a href="Projectintake.html" class="nav-link text-white">
+            <i class="bi bi-folder-plus me-2"></i> Project Intake
+          </a>
+        </li>
+
+        <li class="nav-item" id="menu-resource-allocation">
+          <a href="Salesperformance.html" class="nav-link text-white">
+            <i class="bi bi-folder-plus me-2"></i> Resource Allocation
+          </a>
+        </li>
+
+
+        <!-- Forms with collapsible submenu -->
+        <li class="nav-item" id="menu-forms">
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#formsSubmenu" role="button"
+            aria-expanded="false" aria-controls="formsSubmenu">
+            <i class="bi bi-ui-checks me-2"></i> Forms
+          </a>
+          <div class="collapse" id="formsSubmenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item">
+                <a href="user-registration.html" class="nav-link text-white">
+                  <i class="bi bi-person-plus-fill me-2"></i> New User Registration
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Settings with collapsible submenu -->
+        <li class="nav-item" id="menu-settings">
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#settingsSubmenu" role="button"
+            aria-expanded="false" aria-controls="settingsSubmenu">
+            <i class="bi bi-gear-fill me-2"></i> Settings
+            <i class="bi bi-caret-down-fill ms-auto"></i>
+          </a>
+          <div class="collapse" id="settingsSubmenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item">
+                <a href="userlogin.html" class="nav-link text-white">
+                  <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+
+    <div id="page-content">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+        <div class="container-fluid">
+          <!-- Sidebar toggle button (mobile only) -->
+          <button class="btn btn-outline-secondary d-lg-none me-2" id="sidebarToggle">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <!-- Navbar brand -->
+          <span class="navbar-brand fw-bold text-dark fs-5 me-auto">
+            Intake Dashboard
+          </span>
+
+          <!-- Profile dropdown -->
+          <div class="dropdown ms-auto">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <div id="profileInitial"
+                class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center me-2"
+                style="width:40px;height:40px;font-size:18px;">A</div>
+              <div class="d-flex flex-column d-none d-sm-flex">
+                <span class="fw-semibold text-dark" id="navbarProfileName">User</span>
+                <small class="text-muted" id="navbarProfileEmail">user@email.com</small>
+              </div>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" style="min-width: 220px;">
+              <li class="dropdown-header text-center">
+                <div id="profileInitialBig"
+                  class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center mx-auto mb-2"
+                  style="width:60px;height:60px;font-size:26px;">A</div>
+                <h6 class="mb-0" id="userName">User</h6>
+                <small class="text-muted" id="userEmail">user@email.com</small>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
+                  <i class="bi bi-person-fill me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item text-danger" href="userlogin.html">
+                  <i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">Profile Details & Settings</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="profileForm" novalidate>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6">
+                    <label for="profileName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="profileName" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="profileEmail" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profilePhone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="profilePhone" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileDept" class="form-label">Department</label>
+                    <input type="text" class="form-control" id="profileDept" required>
+                  </div>
+                </div>
+
+                <h6 class="fw-bold mb-3">Change Password</h6>
+                <div class="row g-3 mb-3">
+                  <div class="col-md-4">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword"
+                      placeholder="Enter current password">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                  </div>
+                </div>
+
+                <div id="passwordAlert" class="small text-danger mb-2" style="display:none;"></div>
+                <div id="passwordSuccess" class="small text-success mb-2" style="display:none;"></div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid p-4">
+
+        <div class="container-fluid mt-4">
+          <div class="row g-3 mb-4">
+            <!-- Total Projects -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-primary text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <small>Total Projects</small>
+                  <h3 id="totalProject">0</h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- Active Projects -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-success text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <small>Active Projects</small>
+                  <h3 id="activeProject">0%</h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- Completed Projects -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-warning text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <small>Completed Projects</small>
+                  <h3 id="completeProject">0m 0s</h3>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Projects -->
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-danger text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <small>Pending Projects</small>
+                  <h3 id="pendinProjects">0</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end my-3 gap-2">
+          <button class="btn btn-outline-secondary" id="filterToggle">
+            <i class="fa-solid fa-filter me-1"></i> Show Filters
+          </button>
+          <button class="btn btn-outline-primary" id="dailyDetailsBtn">
+            <i class="fa-solid fa-calendar-day me-1"></i> Projects Details
+          </button>
+        </div>
+
+        <div id="filterFormContainer" class="card shadow-sm mb-3">
+          <h6 class="mb-3"><i class="fa-solid fa-magnifying-glass me-1"></i> Filters</h6>
+          <form id="filterForm" class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">Project Type</label>
+              <select id="filterType">
+                <option value="">All Types</option>
+                <option>Implementation</option>
+                <option>Support</option>
+                <option>Upgrade</option>
+                <option>Development</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Project Status</label>
+              <select id="filterStatus">
+                <option value="">All Status</option>
+                <option>Completed</option>
+                <option>In Progress</option>
+                <option>Pending</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Project Distribution</label>
+              <select id="filterDistribution">
+                <option value="">All Clients</option>
+                <option>Inspire Tech</option>
+                <option>TechNova</option>
+                <option>BrightWorks</option>
+                <option>ACB Corporation</option>
+                <option>Delta Systems</option>
+                <option>XYZ Limited</option>
+                <option>VisionSoft</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Time Range</label>
+              <select id="timeRange">
+                <option value="30" selected>Last 30 Days</option>
+                <option value="14">Last 14 Days</option>
+                <option value="7">Last 7 Days</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="today">Today</option>
+              </select>
+            </div>
+
+            <!-- filter Form Buttons -->
+            <div class="button-row mt-3">
+              <button type="reset" class="btn btn-outline-secondary action-btn">Reset</button>
+              <button type="submit" class="btn btn-primary action-btn">Apply filter</button>
+            </div>
+
+
+          </form>
+        </div>
+
+
+        <!-- project Details Form -->
+        <div id="dailyCallFormContainer" class="card shadow-sm p-3 mb-3 d-none">
+          <h6><i class="fa-solid fa-phone-volume me-1"></i> Projects Details Form</h6>
+          <form id="projectForm" class="row g-3 mt-1">
+            <!-- Employee Name -->
+<div class="col-md-6">
+  <label class="form-label">Employee Name</label>
+  <input type="text" id="employeeName" class="form-control" placeholder="Enter employee name">
+  <div class="invalid-feedback"></div>
+</div>
+
+<!-- ⭐ Employee ID (empId required by backend) -->
+<div class="col-md-6">
+  <label class="form-label">Employee ID (empId)</label>
+  <input type="text" id="empId" class="form-control" placeholder="Enter employee ID">
+  <div class="invalid-feedback">Employee ID is required</div>
+</div>
+
+<!-- Project Name -->
+<div class="col-md-6">
+  <label class="form-label">Project Name</label>
+  <input type="text" id="projectName" class="form-control" placeholder="Enter project name">
+  <div class="invalid-feedback"></div>
+</div>
+
+           
+            <div class="col-md-6">
+              <label class="form-label" for="projectType">Project Type</label>
+              <select id="projectType" class="form-select">
+                <option value="">All types</option>
+                <option>Implementation</option>
+                <option>Support</option>
+                <option>Upgrade</option>
+                <option>Development</option>
+              </select>
+              <div class="invalid-feedback">Please select a project type.</div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label" for="projectStatus">Project Status</label>
+              <select id="projectStatus" class="form-select">
+                <option value="">All status</option>
+                <option>Completed</option>
+                <option>In Progress</option>
+                <option>Pending</option>
+              </select>
+              <div class="invalid-feedback">Please select a project status.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Company Name</label>
+              <input type="text" id="companyName" class="form-control" placeholder="Enter company name">
+              <div class="invalid-feedback"></div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Intake Date</label>
+              <input type="date" id="dailyDate" class="form-control">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="mt-3 d-flex justify-content-end">
+              <button type="reset" class="btn btn-outline-secondary btn-sm me-2">Reset</button>
+              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            </div>
+          </form>
+        </div>
+
+
+        <div class="row g-4 justify-content-center">
+          <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+              <h6 class="mb-3">Projects Over Time</h6>
+              <div class="chart-container">
+                <canvas id="chartjs-line"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+              <h6 class="mb-3">Projects By Type</h6>
+              <div class="chart-container">
+                <canvas id="projectChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+              <h6 class="mb-3">Projects By Status</h6>
+              <div class="chart-container">
+                <canvas id="statusPieChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+              <h6 class="mb-3">Project Distribution</h6>
+              <div class="chart-container">
+                <canvas id="barChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <script src="assets/JS/projectintake.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Mark this page as admin dashboard
+  localStorage.setItem("currentPage", "admin");
+
+  const page = localStorage.getItem("currentPage");
+  let userRole = localStorage.getItem("userRole");
+
+  // If opening Admin page, always set role to admin
+  if (page === "admin") {
+    userRole = "admin";
+    localStorage.setItem("userRole", userRole);
+  }
+
+  console.log("Detected userRole:", userRole);
+
+  const menuIds = [
+    "menu-dashboard",
+    "menu-employee",
+    "menu-project-leads",
+    "menu-project-intake",
+    "menu-resource-allocation",
+    "menu-forms",
+    "menu-settings"
+  ];
+
+  const limitedMenus = [
+    "menu-employee",
+    "menu-project-leads",
+    "menu-settings"
+  ];
+
+  menuIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if ((userRole === "employee" || userRole === "user") && !limitedMenus.includes(id)) {
+      el.style.display = "none";
+    } else {
+      el.style.display = "block";
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded — attaching Project Details handlers");
+
+  const BASE = "http://localhost:9090"; // <-- changed to backend base (was wrong earlier)
+  const dailyDetailsBtn = document.getElementById("dailyDetailsBtn");
+  const dailyContainer = document.getElementById("dailyCallFormContainer");
+  const projectForm = document.getElementById("projectForm");
+
+  console.log("Elements:", { dailyDetailsBtn, dailyContainer, projectForm });
+
+  if (!dailyDetailsBtn) {
+    console.error("Missing #dailyDetailsBtn. Check the button id in HTML.");
+    return;
+  }
+  if (!dailyContainer) {
+    console.error("Missing #dailyCallFormContainer. Check the container id in HTML.");
+    return;
+  }
+  if (!projectForm) {
+    console.error("Missing #projectForm. Check the form id in HTML.");
+    return;
+  }
+
+  // Toggle visibility
+  dailyDetailsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    dailyContainer.classList.toggle("d-none");
+    console.log("Toggled Projects Details form. Visible:", !dailyContainer.classList.contains("d-none"));
+    if (!dailyContainer.classList.contains("d-none")) {
+      const first = projectForm.querySelector("input, select, textarea");
+      if (first) first.focus();
+    }
+  });
+
+  function showMessage(container, text, kind = "success") {
+    const old = container.querySelector(".form-message");
+    if (old) old.remove();
+    const el = document.createElement("div");
+    el.className = "form-message small mt-2";
+    el.textContent = text;
+    el.style.color = kind === "error" ? "crimson" : "green";
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 6000);
+  }
+
+  function validate(payload) {
+    const errs = [];
+    if (!payload.employeeName.trim()) errs.push("Employee name required");
+    if (!payload.projectName.trim()) errs.push("Project name required");
+    if (!payload.projectType.trim()) errs.push("Project type required");
+    if (!payload.projectStatus.trim()) errs.push("Project status required");
+    if (!payload.companyName.trim()) errs.push("Company name required");
+    return errs;
+  }
+
+  projectForm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    console.log("Submit clicked");
+
+    const payload = {
+      employeeName: (document.getElementById("employeeName")?.value || "").trim(),
+      empId: (document.getElementById("empId")?.value || "").trim(), // <-- empId included here
+      projectName: (document.getElementById("projectName")?.value || "").trim(),
+      projectType: (document.getElementById("projectType")?.value || "").trim(),
+      projectStatus: (document.getElementById("projectStatus")?.value || "").trim(),
+      companyName: (document.getElementById("companyName")?.value || "").trim(),
+      intakeDate: (document.getElementById("dailyDate")?.value || "").trim()
+    };
+
+    console.log("Payload prepared:", payload);
+
+    const errs = validate(payload);
+    if (errs.length) {
+      showMessage(projectForm, errs.join("; "), "error");
+      console.warn("Validation failed:", errs);
+      return;
+    }
+
+    const submitBtn = projectForm.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const url = `${BASE}/projects/add`; // <-- post to correct backend endpoint
+      console.log("Posting to", url);
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      console.log("Server responded:", res.status, res.statusText);
+      let bodyText = "";
+      try { bodyText = await res.text(); } catch (e) { bodyText = "<no body>"; }
+      console.log("Response body (raw):", bodyText);
+
+      if (!res.ok) {
+        // try to parse JSON message if available
+        let msg = `HTTP ${res.status}`;
+        try {
+          const j = JSON.parse(bodyText);
+          if (j.message) msg = j.message;
+        } catch {}
+        throw new Error(msg);
+      }
+
+      showMessage(projectForm, "Saved successfully.");
+      projectForm.reset();
+      dailyContainer.classList.add("d-none");
+
+      // optional refresh
+      if (typeof initDashboard === "function") {
+        try { initDashboard(); } catch (e) { console.warn("initDashboard() error:", e); }
+      }
+
+    } catch (err) {
+      console.error("Submit error:", err);
+      showMessage(projectForm, `Save failed: ${err.message}`, "error");
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+});
+
+</script>
+
+
+
+
+    
+</body>
+
+</html>

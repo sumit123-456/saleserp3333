@@ -1,0 +1,441 @@
+/* Wrapper flex */
+#wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  position: fixed;
+}
+
+/* Collapsed sidebar */
+#wrapper.sidebar-collapsed #sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Page content */
+#page-content {
+  margin-left: 250px;   /* adjust to sidebar width */
+  transition: margin-left 0.3s; /* smooth when toggling sidebar */
+}
+
+/* When sidebar is collapsed, content takes full width */
+#wrapper.sidebar-collapsed #page-content {
+  margin-left: 0;
+}
+
+
+/* ---------------------------------
+  3. Dashboard Elements
+--------------------------------- */
+/* Standardized Dashboard Cards */
+.dashboard-card {
+  min-height: 120px; /* same height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.dashboard-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-card.text-white {
+  color: #fff !important;
+}
+
+/* Ensure equal spacing in grid */
+.row.g-3 > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: subtle fade-in animation */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-card {
+  animation: fadeInCard 0.7s ease-in-out;
+}
+
+
+/* Chart Containers */
+.card {
+  border-radius: 12px;
+  border: none;
+}
+
+.chart-container {
+  /* This ensures the chart scales properly within its card */
+  position: relative;
+  width: 100%;
+  min-height: 250px; /* Minimum height for readability on medium screens */
+  display: flex;
+  align-items: center; /* Center the canvas vertically if space allows */
+}
+
+/* Ensure canvas is fully responsive within its container */
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  /* Prevent chart.js from adding inline styles that override responsiveness */
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Table Styling for better look */
+#summaryTable thead th {
+  background-color: #e9ecef;
+  color: #343a40;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.table-responsive {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+/* Lead Section Toggle */
+label.required::after {
+  content: " *";
+  color: red;
+}
+
+#leadDetailsSection {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+#leadDetailsSection.show {
+  display: block;
+  opacity: 1;
+}
+
+
+/* ---------------------------------
+  4. Responsive Breakpoints
+--------------------------------- */
+
+/* Tablet & Mobile Layout (max-width: 991.98px) */
+@media (max-width: 991.98px) {
+  
+  /* Reset page content margin for full width on mobile */
+  #page-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Sidebar positioning for mobile */
+  #sidebar {
+    left: -250px;
+  }
+  #sidebar.show {
+    left: 0;
+  }
+
+  /* Mobile Overlay when sidebar is open */
+  #page-content::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1039;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+  }
+  #page-content.sidebar-open::before {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  /* Navbar adjustments for mobile */
+  .navbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Small Mobile Adjustments (max-width: 576px) */
+@media (max-width: 576px) {
+  /* Smaller font for KPI numbers */
+  .dashboard-card h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Tighter spacing for buttons/filters */
+  .d-flex.justify-content-end.gap-2.mb-3 {
+    justify-content: space-between !important;
+    gap: 0.5rem !important;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.75rem; /* Default Bootstrap sm button padding */
+  }
+
+  /* Reduce minimum height of chart container to save vertical space */
+  .chart-container {
+    min-height: 200px;
+    height: 200px; /* Fixed height for consistency on very small screens */
+  }
+}
+
+/* Mobile-friendly select and input fields */
+/* @media (max-width: 767px) {
+  select,
+  input[type="text"],
+  input[type="date"],
+  input[type="number"] {
+    
+  */
+
+@media (max-width: 576px) {
+    #filterForm select
+ {
+        font-size: 0.85rem;
+        height: 2.6rem;
+        width: 6.9rem;
+    }
+}
+
+  /* Profile dropdown styling adjustments */
+  /* Hide the Admin text next to the initial on small screens */
+  #profileName {
+    display: none !important;
+  }
+
+  #profileInitial {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+  /* Default styling for mobile-sized form controls */
+.form-control-sm-mobile {
+  font-size: 0.9rem;
+  padding: 6px 8px;
+}
+
+/* Make input smaller on mobile */
+@media (max-width: 576px) {
+  #dailyDate {
+    width: 100%;           /* keeps it responsive to parent */
+    font-size: 0.85rem;    /* smaller text */
+    padding: 5px 8px;      /* tighter spacing */
+    height: 2.2rem;        /* reduces height */
+    box-sizing: border-box;
+  }
+
+  /* Optional: reduce label and margin spacing */
+  .form-label {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .col-md-6 {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+/* Highlight active sidebar link */
+#sidebar .nav-link.active {
+  background-color: #898d92; /* Bootstrap primary color */
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5PX;
+}
+
+/* ===== BUTTON ROW STYLING ===== */
+.button-row {
+  display: flex;
+  gap: 10px; /* spacing between buttons */
+  justify-content: flex-end; /* align right */
+}
+
+.action-btn {
+  flex: 1;
+  height: 40px; /* equal height */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  min-width: 100px; /* consistent width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .button-row {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .action-btn {
+    flex: 1;
+    width: 48%;
+    height: 42px;
+    font-size: 0.85rem;
+  }
+}
+
+/* ===== BUTTON ROW STYLING ===== */
+.button-row {
+  display: flex;
+  gap: 10px;               /* spacing between buttons */
+  justify-content: flex-end; /* align right on desktop */
+  flex-wrap: wrap;          /* allow wrap if needed */
+}
+
+/* Buttons style */
+.action-btn {
+  height: 36px;             /* desktop height */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  min-width: 100px;         /* consistent width on desktop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .button-row {
+    justify-content: flex-start; /* left align on mobile */
+    gap: 5px;                    /* smaller spacing */
+    width: 100%;
+  }
+
+  .button-row .action-btn {
+    flex: 1 1 48%;               /* two buttons per row */
+    min-width: auto;
+    font-size: 0.85rem;
+    height: 34px;                /* slightly smaller */
+  }
+}
+
+/* ===== Sidebar Mobile Fix (does NOT affect desktop) ===== */
+
+/* Only apply below 992px (Bootstrap's md breakpoint) */
+@media (max-width: 991px) {
+
+  /* Sidebar style in mobile view */
+  #sidebar {
+    position: fixed !important;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40; /* keep same as your sidebar */
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    z-index: 1050; /* above navbar */
+  }
+
+  /* Show sidebar when toggled */
+  #sidebar.show {
+    left: 0 !important;
+  }
+
+  /* Allow full scroll inside sidebar */
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+  }
+
+  /* Add dark overlay behind sidebar */
+  #page-content.sidebar-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1049; /* below sidebar */
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hide overlay by default */
+  #page-content::before {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Push navbar behind sidebar when sidebar is open */
+  nav.navbar {
+    position: relative;
+    z-index: 1 !important;
+  }
+}
+
+/* Make them smaller on mobile screens */
+@media (max-width: 576px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+ 
+  .form-select-sm-mobile {
+    width: 60%; /* reduce width */
+    font-size: 0.85rem;
+    padding: 0.35rem 0.6rem;
+  }
+ 
+  label.form-label {
+    font-size: 0.85rem;
+  }
+}
+.row.g-3 > .col-md-6 {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+

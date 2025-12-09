@@ -1,0 +1,20 @@
+{
+  "sales": [
+    { "employee": "Amit Sharma", "target": 100000, "achieve": 75 },
+    { "employee": "Priya Singh", "target": 80000, "achieve": 60 },
+    { "employee": "Rahul Verma", "target": 120000, "achieve": 90 },
+    { "employee": "Sneha Patel", "target": 95000, "achieve": 85 },
+    { "employee": "Vikas Gupta", "target": 70000, "achieve": 55 },
+    { "employee": "Vasudha Chaudhari", "target": 144441, "achieve": 200 },
+    { "employee": "Imaran Lata", "target": 60938, "achieve": 5000 },
+    { "employee": "Gopal Dani", "target": 75923, "achieve": 3000 },
+    { "employee": "Aashi Sekhon", "target": 160698, "achieve": 20000 },
+    { "employee": "Balveer Krish", "target": 72238, "achieve": 5600 },
+    { "employee": "Eshana Khare", "target": 190546, "achieve": 13000 },
+    { "employee": "Maanas Shan", "target": 82318, "achieve": 45000 },
+    { "employee": "Reyansh Goswami", "target": 116897, "achieve": 3780 }
+  ]
+}
+
+
+ 

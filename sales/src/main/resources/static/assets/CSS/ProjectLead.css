@@ -1,0 +1,620 @@
+/* ===== Base Styles ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+#wrapper {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+
+
+/* Sidebar */
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  position: fixed;
+}
+
+/* Collapsed sidebar */
+#wrapper.sidebar-collapsed #sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Page content */
+#page-content {
+  margin-left: 250px;   /* adjust to sidebar width */
+  transition: margin-left 0.3s; /* smooth when toggling sidebar */
+}
+
+/* When sidebar is collapsed, content takes full width */
+#wrapper.sidebar-collapsed #page-content {
+  margin-left: 0;
+}
+
+  /* Profile dropdown styling adjustments */
+  /* Hide the Admin text next to the initial on small screens */
+  #profileName {
+    display: none !important;
+  }
+
+  #profileInitial {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+
+/* Standardized Dashboard Cards */
+.dashboard-card {
+  min-height: 120px; /* same height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card h6 {
+  font-size: 13px;
+  font-weight: 540;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.dashboard-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-card.text-white {
+  color: #fff !important;
+}
+
+/* Ensure equal spacing in grid */
+.row.g-3 > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: subtle fade-in animation */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-card {
+  animation: fadeInCard 0.7s ease-in-out;
+}
+
+
+/* ===== Charts Section ===== */
+.chart-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+.graphs-section {
+  margin-top: 40px;
+}
+
+
+/* ===== Scrollbar ===== */
+#sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+#sidebar::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 3px;
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0d6efd;
+  padding: 10px 20px;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar .nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+  color: #d1e0ff;
+}
+
+/* Hamburger Menu for Mobile */
+.navbar .menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ===== Filter Form Styling ===== */
+#filterFormContainer {
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+#filterForm .form-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Make Reset & Apply buttons small and aligned neatly */
+#filterForm button {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-width: 70px;
+}
+
+/* Align buttons in the same row with inputs */
+#filterForm .col-md-2 {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 250px;
+  background-color: #f8f9fa;
+  height: calc(100vh - 60px);
+  padding: 20px;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: #e9ecef;
+}
+
+/* ========== MAIN SECTION ========== */
+.main-section {
+  margin-left: 250px;
+  padding: 20px;
+  background-color: #f5f6fa;
+  min-height: calc(100vh - 60px);
+  transition: margin-left 0.3s ease-in-out;
+}
+
+#filterToggle {
+  color: white;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+#filterToggle:hover {
+  background-color: #2a96fc;  /* darker on hover */
+}
+
+
+/* ========== RESPONSIVE DESIGN ========== */
+
+/* Tablets and below */
+@media (max-width: 992px) {
+  .navbar .nav-links {
+    display: none;
+  }
+
+  .navbar .menu-toggle {
+    display: block;
+  }
+
+  /* Sidebar hidden by default */
+  .sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 999;
+  }
+
+  /* Show sidebar when active */
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Dim background when sidebar open */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  /* Main section full width on mobile */
+  .main-section {
+    margin-left: 0;
+    padding: 15px;
+  }
+}
+
+/* Mobile fix: sidebar toggle + heading inline, profile unchanged */
+@media (max-width: 576px) {
+    .navbar .container-fluid {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; /* spacing between toggle and heading */
+        flex-wrap: nowrap;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+    }
+
+    #sidebarToggle {
+        display: block;
+        font-size: 1.25rem;
+    }
+}
+
+
+/* ========================================================= */
+/* RESPONSIVE DESIGN */
+/* ========================================================= */
+
+/* ---------- Tablets (<= 992px) ---------- */
+@media (max-width: 992px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .dashboard-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .dashboard-card h6 {
+    font-size: 0.9rem;
+  }
+}
+
+/* filter section*/
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  #filterForm {
+    flex-direction: column;
+  }
+
+  #filterForm .col-md-2 {
+    justify-content: space-between;
+  }
+
+  #filterForm button {
+    width: 48%;
+  }
+}
+
+/* ---------- Mobile Landscape & Small Tablets (<= 768px) ---------- */
+@media (max-width: 768px) {
+  /* Sidebar collapses */
+  #sidebar {
+    position: fixed;
+    left: -240px;
+    width: 240px;
+  }
+
+  #sidebar.active {
+    left: 0;
+  }
+
+  /* Add overlay when sidebar is open */
+  body.sidebar-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1040;
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  /* Dashboard Cards - stack 2 per row */
+  .dashboard-card {
+    margin-bottom: 10px;
+  }
+
+  .row.g-3 > [class*="col-md-3"] {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  /* Filter section */
+  #filterForm .row {
+    flex-direction: column;
+  }
+
+  #filterForm .col-md-4 {
+    width: 100%;
+  }
+
+  #filterForm button {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  /* Graphs */
+  .graphs-section .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* ---------- Mobile Portrait (<= 576px) ---------- */
+@media (max-width: 576px) {
+  /* Sidebar fully hidden by default */
+  #sidebar {
+    width: 200px;
+    left: -200px;
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .navbar-brand {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .dropdown-toggle {
+    font-size: 0.85rem;
+  }
+
+  /* Dashboard cards stack 1 per row */
+  .row.g-3 > [class*="col-md-3"] {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Graphs stack vertically */
+  .graphs-section .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Adjust filter button */
+  #filterToggle {
+    width: 100%;
+  }
+
+  /* Reduce chart size */
+  canvas {
+    height: 250px !important;
+  }
+}
+
+/* ---------- Very Small Devices (<= 400px) ---------- */
+@media (max-width: 400px) {
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+
+  .chart-title {
+    font-size: 16px;
+  }
+
+  .dashboard-card h3 {
+    font-size: 1.2rem;
+  }
+
+  #profileInitial {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 991px) {
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    background: #212529;
+    color: #fff;
+    transition: left 0.3s ease;
+    z-index: 1050;
+  }
+
+  #sidebar.show {
+    left: 0;
+  }
+
+  #sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+
+  #sidebarOverlay.active {
+    display: block;
+  }
+}
+
+/* Ensure proper alignment and wrapping */
+.navbar-brand {
+  min-width: 0; /* Allow flex-truncate to work */
+}
+
+@media (max-width: 576px) {
+  .navbar .container-fluid {
+    flex-wrap: wrap; /* Allow wrapping if needed */
+  }
+  
+  /* Optional: spacing for mobile */
+  .navbar-brand {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .d-flex.align-items-center.flex-shrink-0 {
+    width: 100%;
+    justify-content: flex-start; /* Keep profile below heading */
+  }
+}
+
+/* Highlight active sidebar link */
+#sidebar .nav-link.active {
+  background-color: #898d92; /* Bootstrap primary color */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Responsive Sidebar/Layout */
+@media (max-width: 991.98px) {
+  
+  /* Reset page content margin for full width on mobile */
+  #page-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Sidebar positioning for mobile */
+  #sidebar {
+    left: -250px;
+  }
+  #sidebar.show {
+    left: 0;
+  }
+
+  /* Mobile Overlay when sidebar is open */
+  #page-content::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1039;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+  }
+  #page-content.sidebar-open::before {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  /* Navbar adjustments for mobile */
+  .navbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}

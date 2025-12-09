@@ -1,0 +1,651 @@
+/* ==============================
+   🌐 Base Styles
+============================== */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f7fb;
+  color: #212529;
+  min-height: 100vh;
+}
+
+#wrapper {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+}
+
+/* ==============================
+   📁 Sidebar
+============================== */
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  position: fixed;
+}
+
+/* Collapsed sidebar */
+#wrapper.sidebar-collapsed #sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Page content */
+#page-content {
+  margin-left: 250px;   /* adjust to sidebar width */
+  transition: margin-left 0.3s; /* smooth when toggling sidebar */
+}
+
+/* When sidebar is collapsed, content takes full width */
+#wrapper.sidebar-collapsed #page-content {
+  margin-left: 0;
+}
+
+  /* Profile dropdown styling adjustments */
+  /* Hide the Admin text next to the initial on small screens */
+  #profileName {
+    display: none !important;
+  }
+
+  #profileInitial {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+
+/* ==============================
+   🧭 Navbar
+============================== */
+.navbar {
+  height: 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ==============================
+   👤 Profile Section
+============================== */
+.dropdown-menu {
+  font-size: 0.9rem;
+}
+
+/* ==============================
+   KPI Section – Styled like Dashboard Cards
+============================== */
+.kpi-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;                  /* space between cards */
+  justify-content: center;     /* center cards horizontally */
+  margin: 0 auto;              /* center the whole section */
+  padding: 10px 0;
+}
+
+.info-box {
+  min-height: 120px;           /* same as dashboard card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  flex: 1 1 200px;             /* flexible width */
+  max-width: 280px;            /* limit max width */
+  background-color: #0d6efd;   /* example color */
+  color: #fff;
+}
+
+/* Hover effect like dashboard cards */
+.info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.info-box h3 {
+  font-size: 19px;
+  font-weight: 560;
+  margin: 0;
+}
+
+.info-box h6, .info-box p {
+  font-size: 28px;
+  font-weight: 7650;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* Optional fade-in animation */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-box {
+  animation: fadeInCard 0.7s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .info-box {
+    flex: 1 1 220px;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 576px) {
+  .kpi-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .info-box {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 12px 16px;
+  }
+
+  .info-box h3 {
+    font-size: 24px;
+  }
+
+  .info-box p, .info-box h6 {
+    font-size: 14px;
+  }
+}
+
+/* Add spacing from page edges */
+.dashboard-container {
+  padding: 15px 20px;
+}
+
+
+.blue { background-color: #0d6efd; }
+.red  { background-color: #dc3545; }
+
+
+/* ==============================
+   📉 Chart Section
+============================== */
+.chart-section {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.chart-card {
+  flex: 1 1 45%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  padding: 14px;
+  min-width: 300px;
+}
+
+.chart-title-small,
+.chart-title-medium {
+  color: #111;
+  margin-bottom: 8px;
+}
+
+.chart-title-medium {
+  font-size: 1rem;
+}
+
+.canvas-wrap {
+  width: 100%;
+  height: 320px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ==============================
+   💬 Modal (Profile)
+============================== */
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body input {
+  font-size: 0.9rem;
+}
+
+/* ==============================
+   🎯 Filter Area Styling
+============================== */
+.filter-area {
+  margin: 20px 0;
+  padding: 15px 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* For consistent dropdown look */
+.filter-select {
+  min-width: 160px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.filter-select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Keep buttons aligned properly in the same row */
+.filter-buttons button {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+}
+
+/* Responsive fix for small screens */
+@media (max-width: 768px) {
+  .filter-area .row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filter-buttons {
+    justify-content: flex-start;
+  }
+
+  .filter-buttons button {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-top: 5px;
+  }
+}
+
+
+
+/* ====== Responsive Design ====== */
+
+/* Medium screens (tablets) */
+@media (max-width: 992px) {
+  .filter-area .row {
+    justify-content: center;
+  }
+
+  .filter-area {
+    text-align: center;
+  }
+}
+
+/* Small screens (mobile landscape & portrait) */
+@media (max-width: 768px) {
+  .filter-area .row {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .filter-area .col-auto {
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  /* Buttons full width */
+  #applyFilter, 
+  #resetFilter {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  #resetFilter {
+    margin-left: 0;
+  }
+}
+
+/* Extra small screens (less than 480px) */
+@media (max-width: 480px) {
+  .filter-area {
+    padding: 8px;
+  }
+
+  .filter-select {
+    font-size: 0.85rem;
+    padding: 5px 8px;
+  }
+
+  .filter-area .form-label {
+    font-size: 0.85rem;
+  }
+
+  #applyFilter, 
+  #resetFilter {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}
+
+
+/* ==============================
+   🧩 Responsiveness
+============================== */
+
+/* --- Tablets --- */
+@media (max-width: 992px) {
+  .chart-card {
+    flex: 1 1 100%;
+  }
+
+  .canvas-wrap {
+    height: 280px;
+  }
+}
+
+/* Optional mobile responsiveness */
+@media (max-width: 992px) {
+  #sidebar {
+    position: fixed;
+    top: 56px; /* Adjust to your navbar height */
+    left: -250px; /* Hidden by default */
+    height: calc(100vh - 56px); /* Full height minus navbar */
+    z-index: 1050;
+    background-color: #343a40; /* your sidebar color */
+    transition: left 0.3s ease;
+  }
+
+  #wrapper.sidebar-collapsed #sidebar {
+    left: 0; /* slide in */
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+}
+
+/* --- Mobile (768px and below) --- */
+@media (max-width: 768px) {
+  /* Sidebar collapses */
+  #sidebar {
+    left: -240px;
+    width: 240px;
+    position: fixed;
+  }
+
+  #sidebar.active {
+    left: 0;
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+
+  /* Sidebar toggle visible */
+  #sidebarToggle {
+    display: inline-block;
+  }
+
+  /* Navbar adjustments */
+  .navbar {
+    padding: 0 0.75rem;
+  }
+
+  .navbar-brand {
+    font-size: 0.95rem;
+  }
+
+  /* KPI cards stack vertically */
+  .kpi-section {
+    flex-direction: column;
+  }
+
+  /* Charts one below another */
+  .chart-card {
+    flex: 1 1 100%;
+  }
+
+  .canvas-wrap {
+    height: 250px;
+  }
+}
+
+/* --- Extra Small Devices (576px and below) --- */
+@media (max-width: 576px) {
+  body {
+    font-size: 14px;
+  }
+
+  .navbar {
+    height: auto;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+
+  #profileInitial {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .dashboard-container {
+    padding: 15px 10px;
+  }
+
+  .info-box p {
+    font-size: 22px;
+  }
+
+  .chart-card {
+    padding: 10px;
+  }
+
+  .canvas-wrap {
+    height: 220px;
+  }
+}
+
+/* ====== Mobile View Adjustments for KPI Cards ====== */
+@media (max-width: 768px) {
+  .kpi-section {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .info-box {
+    flex: 1 1 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .info-box h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .info-box p {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+/* Extra adjustments for very small screens */
+@media (max-width: 480px) {
+  .info-box h3 {
+    font-size: 13px;
+  }
+
+  .info-box p {
+    font-size: 18px;
+  }
+}
+
+/* Overlay for mobile sidebar */
+#sidebarOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 1040; /* slightly below sidebar's z-index (1050) */
+}
+
+/* Show overlay when sidebar is active */
+#sidebar.active + #sidebarOverlay {
+  display: block;
+}
+
+/* Highlight active sidebar link */
+#sidebar .nav-link.active {
+  background-color: #898d92; /* Bootstrap primary color */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Responsive Sidebar/Layout */
+@media (max-width: 991.98px) {
+  
+  /* Reset page content margin for full width on mobile */
+  #page-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Sidebar positioning for mobile */
+  #sidebar {
+    left: -250px;
+  }
+  #sidebar.show {
+    left: 0;
+  }
+
+  /* Mobile Overlay when sidebar is open */
+  #page-content::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1039;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+  }
+  #page-content.sidebar-open::before {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  /* Navbar adjustments for mobile */
+  .navbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* ===== Sidebar Mobile Fix (does NOT affect desktop) ===== */
+
+/* Only apply below 992px (Bootstrap's md breakpoint) */
+@media (max-width: 991px) {
+
+  /* Sidebar style in mobile view */
+  #sidebar {
+    position: fixed !important;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40; /* keep same as your sidebar */
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    z-index: 1050; /* above navbar */
+  }
+
+  /* Show sidebar when toggled */
+  #sidebar.show {
+    left: 0 !important;
+  }
+
+  /* Allow full scroll inside sidebar */
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+  }
+
+  /* Add dark overlay behind sidebar */
+  #page-content.sidebar-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1049; /* below sidebar */
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hide overlay by default */
+  #page-content::before {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Push navbar behind sidebar when sidebar is open */
+  nav.navbar {
+    position: relative;
+    z-index: 1 !important;
+  }
+}

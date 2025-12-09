@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sales Resource Allocation</title>
+  <link rel="icon" href="assets/img/Logo_English.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/CSS/salesperformance.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3a0ca3;
+      --accent-color: #7209b7;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+    }
+    
+    body {
+      background-color: #f5f7fb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    #sidebar {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      position: fixed;
+      width: 250px;
+      z-index: 1000;
+      transition: all 0.3s;
+      box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #sidebar.collapsed {
+      margin-left: -250px;
+    }
+    
+    #sidebar .nav-link {
+      color: #cbd5e1;
+      padding: 12px 20px;
+      margin: 2px 0;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    #sidebar .nav-link:hover,
+    #sidebar .nav-link.active {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+    
+    #sidebar .nav-link i {
+      width: 20px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    
+    #page-content {
+      margin-left: 250px;
+      transition: all 0.3s;
+      min-height: 100vh;
+    }
+    
+    .sidebar-collapsed #page-content {
+      margin-left: 0;
+    }
+    
+    .navbar {
+      background: white;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      padding: 12px 0;
+    }
+    
+    .dashboard-container {
+      padding: 25px;
+    }
+    
+    .kpi-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .info-box {
+      padding: 25px;
+      border-radius: 15px;
+      color: white;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .info-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .info-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .info-box.blue {
+      background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    }
+    
+    .info-box.red {
+      background: linear-gradient(135deg, #f72585 0%, #7209b7 100%);
+    }
+    
+    .info-box.green {
+      background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+    }
+    
+    .info-box h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    
+    .kpi-number {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0;
+    }
+    
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+    
+    .card-header {
+      background-color: white;
+      border-bottom: 1px solid #eef2f7;
+      padding: 20px 25px;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--dark-color);
+    }
+    
+    .card-body {
+      padding: 25px;
+    }
+    
+    .chart-container {
+      position: relative;
+      height: 300px;
+      width: 100%;
+    }
+    
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      padding: 10px 15px;
+      transition: all 0.3s;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+    
+    .table th {
+      background-color: #1e293b;
+      color: white;
+      font-weight: 500;
+      border: none;
+      padding: 15px;
+    }
+    
+    .table td {
+      padding: 15px;
+      vertical-align: middle;
+      border-bottom: 1px solid #eef2f7;
+    }
+    
+    .badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    
+    .profile-initial {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    @media (max-width: 768px) {
+      #sidebar {
+        margin-left: -250px;
+      }
+      
+      #sidebar.collapsed {
+        margin-left: 0;
+      }
+      
+      #page-content {
+        margin-left: 0;
+      }
+      
+      .kpi-section {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="bg-dark text-white p-3">
+      <div class="text-center mb-4">
+        <img src="assets/img/Logo_English.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
+        <h5 class="mt-3">Sales ERP System</h5>
+        <small class="text-muted">Resource Management</small>
+      </div>
+      <ul class="nav flex-column" id="sidebarMenu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link text-white">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Employee.html" class="nav-link text-white">
+            <i class="bi bi-people-fill"></i> Employees
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="ProjectLead.html" class="nav-link text-white">
+            <i class="bi bi-clipboard-check"></i> Project Leads
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Projectintake.html" class="nav-link text-white">
+            <i class="bi bi-folder-plus"></i> Project Intake
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="Salesperformance.html" class="nav-link text-white active">
+            <i class="bi bi-person-lines-fill"></i> Resource Allocation
+          </a>
+        </li>
+        <li class="nav-item mt-4">
+          <a class="nav-link text-danger" href="#" onclick="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Page Content -->
+    <div id="page-content">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+        <div class="container-fluid">
+          <button class="btn btn-outline-secondary d-lg-none me-2" id="sidebarToggle">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <span class="navbar-brand fw-bold text-dark fs-5 me-auto">
+            <i class="bi bi-person-lines-fill me-2"></i> Resource Allocation Management
+          </span>
+
+          <!-- Profile dropdown -->
+          <div class="dropdown ms-auto">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="profile-initial me-2">
+                <span id="navbarProfileInitial">U</span>
+              </div>
+              <div class="d-flex flex-column d-none d-sm-flex">
+                <span class="fw-semibold text-dark" id="navbarProfileName">Loading...</span>
+                <small class="text-muted" id="navbarProfileEmail">Loading...</small>
+              </div>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" style="min-width: 220px;">
+              <li class="dropdown-header text-center">
+                <div class="profile-initial mx-auto mb-2" style="width:60px;height:60px;font-size:26px;">
+                  <span id="dropdownProfileInitial">U</span>
+                </div>
+                <h6 class="mb-0" id="userName">Loading...</h6>
+                <small class="text-muted" id="userEmail">Loading...</small>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" onclick="showProfileModal()">
+                  <i class="bi bi-person-fill me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                  <i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="dashboard-container">
+        <!-- KPIs -->
+        <div class="kpi-section text-white">
+          <div class="info-box blue">
+            <h3><i class="bi bi-people-fill me-2"></i>Total IT Teams</h3>
+            <p id="totalTeams" class="kpi-number">0</p>
+          </div>
+          <div class="info-box red">
+            <h3><i class="bi bi-briefcase-fill me-2"></i>Total Allocations</h3>
+            <p id="totalProjects" class="kpi-number">0</p>
+          </div>
+          <div class="info-box green">
+            <h3><i class="bi bi-person-badge me-2"></i>Active Projects</h3>
+            <p id="activeProjects" class="kpi-number">0</p>
+          </div>
+        </div>
+
+        <!-- Resource Allocation Form -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>New Resource Allocation</h5>
+          </div>
+          <div class="card-body">
+            <form id="resource_allocation_form" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="project_id">Project ID *</label>
+                  <input type="text" id="project_id" class="form-control" required 
+                         placeholder="Enter project ID (e.g., PROJ-001)">
+                  <div class="invalid-feedback">Please enter project ID.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="it_team">IT Team *</label>
+                  <select id="it_team" class="form-select" required>
+                    <option value="">Select IT Team</option>
+                    <option value="Frontend">Frontend Team</option>
+                    <option value="Backend">Backend Team</option>
+                    <option value="Mobile">Mobile Team</option>
+                    <option value="DevOps">DevOps Team</option>
+                    <option value="QA">QA Team</option>
+                  </select>
+                  <div class="invalid-feedback">Please select IT team.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="start_date">Start Date *</label>
+                  <input type="date" id="start_date" class="form-control" required>
+                  <div class="invalid-feedback">Please select start date.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label" for="end_date">End Date *</label>
+                  <input type="date" id="end_date" class="form-control" required>
+                  <div class="invalid-feedback">Please select end date.</div>
+                </div>
+              </div>
+
+              <div class="mt-4 text-end">
+                <button type="reset" class="btn btn-secondary me-2">
+                  <i class="bi bi-x-circle me-1"></i>Clear
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-save me-1"></i>Save Allocation
+                </button>
+              </div>
+            </form>
+            <div id="formMessage" class="mt-3"></div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Projects Distribution by Team</h5>
+              </div>
+              <div class="card-body">
+                <div class="chart-container">
+                  <canvas id="barChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>Allocation Timeline</h5>
+              </div>
+              <div class="card-body">
+                <div class="chart-container">
+                  <canvas id="lineChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Allocations Table -->
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0"><i class="bi bi-list me-2"></i>All Allocations</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="table-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Project ID</th>
+                    <th>IT Team</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="allocationsTable">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">Loading allocations...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div class="modal fade" id="profileModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title"><i class="bi bi-person-fill me-2"></i>Profile Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center mb-4">
+            <div class="profile-initial mx-auto mb-3" style="width:80px;height:80px;font-size:32px;">
+              <span id="modalProfileInitial">U</span>
+            </div>
+            <h5 id="modalFullName">Loading...</h5>
+            <p class="text-muted mb-1" id="modalEmail">Loading...</p>
+            <p class="text-muted mb-0" id="modalRole">Loading...</p>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label"><i class="bi bi-telephone-fill me-2"></i>Phone</label>
+              <p id="modalPhone" class="form-control-static">Loading...</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label"><i class="bi bi-people-fill me-2"></i>Team</label>
+              <p id="modalTeam" class="form-control-static">Loading...</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label"><i class="bi bi-telephone-outbound-fill me-2"></i>Call Target</label>
+              <p id="modalCallTarget" class="form-control-static">Loading...</p>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label"><i class="bi bi-graph-up-arrow me-2"></i>Monthly Target</label>
+              <p id="modalMonthlyTarget" class="form-control-static">Loading...</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Base URL for API
+    const API_BASE_URL = 'http://localhost:9090/api/v1';
+    
+    // Global variables
+    let barChartInstance = null;
+    let lineChartInstance = null;
+    let currentUser = null;
+    let authToken = null;
+    let isAuthenticated = false;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Resource Allocation page loading...');
+      
+      // Check authentication first
+      checkAuthentication();
+      
+      // Setup sidebar toggle
+      document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
+      });
+      
+      // Set default dates
+      const today = new Date().toISOString().split('T')[0];
+      const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      document.getElementById('start_date').value = today;
+      document.getElementById('end_date').value = nextWeek;
+    });
+
+    // Check if user is authenticated
+    function checkAuthentication() {
+      console.log('Checking authentication...');
+      
+      // Check localStorage for token
+      authToken = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+      
+      console.log('Auth Token from localStorage:', authToken ? 'Present' : 'Missing');
+      console.log('User Data from localStorage:', userData ? 'Present' : 'Missing');
+      
+      if (!authToken || !userData) {
+        console.log('❌ No authentication found. Redirecting to login...');
+        redirectToLogin();
+        return;
+      }
+      
+      try {
+        currentUser = JSON.parse(userData);
+        console.log('✅ User data loaded:', currentUser);
+        isAuthenticated = true;
+        
+        // Update UI with user data
+        updateUserUI();
+        updateProfileModal();
+        
+        // Load other data
+        loadKPIData();
+        loadAllocationsTable();
+        loadAllocationsForChart();
+        
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        redirectToLogin();
+      }
+    }
+
+    // Update user interface
+    function updateUserUI() {
+      if (!currentUser) return;
+      
+      console.log('Updating UI with user:', currentUser);
+      
+      const name = currentUser.fullName || 'User';
+      const email = currentUser.email || 'user@company.com';
+      const initial = currentUser.profileInitial || (name.charAt(0) || 'U').toUpperCase();
+      
+      // Update navbar
+      const elements = [
+        { id: 'navbarProfileName', value: name },
+        { id: 'navbarProfileEmail', value: email },
+        { id: 'navbarProfileInitial', value: initial },
+        { id: 'dropdownProfileInitial', value: initial },
+        { id: 'userName', value: name },
+        { id: 'userEmail', value: email }
+      ];
+      
+      elements.forEach(element => {
+        const el = document.getElementById(element.id);
+        if (el) el.textContent = element.value;
+      });
+    }
+
+    // Update profile modal
+    function updateProfileModal() {
+      if (!currentUser) return;
+      
+      const elements = [
+        { id: 'modalProfileInitial', value: currentUser.profileInitial || (currentUser.fullName?.charAt(0) || 'U').toUpperCase() },
+        { id: 'modalFullName', value: currentUser.fullName || 'User' },
+        { id: 'modalEmail', value: currentUser.email || 'N/A' },
+        { id: 'modalRole', value: currentUser.role || 'N/A' },
+        { id: 'modalPhone', value: currentUser.phoneNumber || 'N/A' },
+        { id: 'modalTeam', value: currentUser.teamAllocation || 'N/A' },
+        { id: 'modalCallTarget', value: currentUser.callTarget || '0' },
+        { id: 'modalMonthlyTarget', value: currentUser.monthlyTarget || '0' }
+      ];
+      
+      elements.forEach(element => {
+        const el = document.getElementById(element.id);
+        if (el) el.textContent = element.value;
+      });
+    }
+
+    // Show profile modal
+    function showProfileModal() {
+      updateProfileModal();
+      new bootstrap.Modal(document.getElementById('profileModal')).show();
+    }
+
+    // Load KPI data
+    async function loadKPIData() {
+      if (!isAuthenticated) return;
+      
+      try {
+        console.log('Loading KPI data...');
+        const response = await fetch(`${API_BASE_URL}/allocations/stats`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('KPI data received:', result);
+          
+          // Handle different response formats
+          let data = result;
+          if (result.success && result.data) {
+            data = result.data;
+          }
+          
+          document.getElementById('totalTeams').textContent = data.totalTeams || 0;
+          document.getElementById('totalProjects').textContent = data.totalAllocations || 0;
+          document.getElementById('activeProjects').textContent = data.activeProjects || 0;
+        } else {
+          console.warn('KPI API returned error, using defaults');
+          setDefaultKPIs();
+        }
+      } catch (error) {
+        console.error('Error loading KPI data:', error);
+        setDefaultKPIs();
+      }
+    }
+
+    // Set default KPI values
+    function setDefaultKPIs() {
+      document.getElementById('totalTeams').textContent = '0';
+      document.getElementById('totalProjects').textContent = '0';
+      document.getElementById('activeProjects').textContent = '0';
+    }
+
+    // Load allocations table
+    async function loadAllocationsTable() {
+      if (!isAuthenticated) return;
+      
+      try {
+        console.log('Loading allocations table...');
+        const response = await fetch(`${API_BASE_URL}/allocations`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Allocations received:', result);
+          
+          let allocations = [];
+          if (Array.isArray(result)) {
+            allocations = result;
+          } else if (result.data && Array.isArray(result.data)) {
+            allocations = result.data;
+          } else if (result.success && result.data && Array.isArray(result.data)) {
+            allocations = result.data;
+          }
+          
+          updateAllocationsTable(allocations);
+        } else {
+          console.warn('No allocations found');
+          updateAllocationsTable([]);
+        }
+      } catch (error) {
+        console.error('Error loading allocations:', error);
+        updateAllocationsTable([]);
+      }
+    }
+
+    // Update allocations table
+    function updateAllocationsTable(allocations) {
+      const tbody = document.getElementById('allocationsTable');
+      if (!tbody) return;
+      
+      tbody.innerHTML = '';
+      
+      if (!Array.isArray(allocations) || allocations.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center text-muted">
+              <i class="bi bi-inbox me-2"></i>No allocations found
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      allocations.forEach((allocation, index) => {
+        const row = document.createElement('tr');
+        const startDate = allocation.startDate ? 
+          new Date(allocation.startDate).toLocaleDateString() : 'N/A';
+        const endDate = allocation.endDate ? 
+          new Date(allocation.endDate).toLocaleDateString() : 'N/A';
+        
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td><strong>${allocation.projectId || 'N/A'}</strong></td>
+          <td><span class="badge bg-primary">${allocation.itTeam || 'N/A'}</span></td>
+          <td>${startDate}</td>
+          <td>${endDate}</td>
+          <td><span class="badge bg-success">${allocation.status || 'Active'}</span></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    // Load allocations for charts
+    async function loadAllocationsForChart() {
+      if (!isAuthenticated) return;
+      
+      try {
+        const allocations = await getAllocations();
+        createChartDataFromAllocations(allocations);
+      } catch (error) {
+        console.error('Error loading chart data:', error);
+        createSampleChartData();
+      }
+    }
+
+    // Get allocations from API
+    async function getAllocations() {
+      if (!isAuthenticated) return [];
+      
+      try {
+        const response = await fetch(`${API_BASE_URL}/allocations`, {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          
+          if (Array.isArray(result)) {
+            return result;
+          } else if (result.data && Array.isArray(result.data)) {
+            return result.data;
+          } else if (result.success && result.data && Array.isArray(result.data)) {
+            return result.data;
+          }
+        }
+        return [];
+      } catch (error) {
+        console.error('Error getting allocations:', error);
+        return [];
+      }
+    }
+
+    // Create chart data from allocations
+    function createChartDataFromAllocations(allocations) {
+      if (!Array.isArray(allocations) || allocations.length === 0) {
+        createSampleChartData();
+        return;
+      }
+      
+      // Group by team
+      const teamCounts = {};
+      allocations.forEach(allocation => {
+        const team = allocation.itTeam || 'Unknown';
+        teamCounts[team] = (teamCounts[team] || 0) + 1;
+      });
+      
+      createBarChart(teamCounts);
+      createLineChart();
+    }
+
+    // Create sample chart data
+    function createSampleChartData() {
+      const sampleData = {
+        "Frontend": 5,
+        "Backend": 8,
+        "Mobile": 3,
+        "DevOps": 4,
+        "QA": 2
+      };
+      
+      createBarChart(sampleData);
+      createLineChart();
+    }
+
+    // Create bar chart
+    function createBarChart(teamData) {
+      const barCtx = document.getElementById('barChart');
+      if (!barCtx) return;
+      
+      if (barChartInstance) {
+        barChartInstance.destroy();
+      }
+      
+      const teams = Object.keys(teamData);
+      const counts = Object.values(teamData);
+      
+      barChartInstance = new Chart(barCtx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: teams,
+          datasets: [{
+            label: 'Number of Projects',
+            data: counts,
+            backgroundColor: [
+              'rgba(67, 97, 238, 0.7)',
+              'rgba(247, 37, 133, 0.7)',
+              'rgba(76, 201, 240, 0.7)',
+              'rgba(58, 12, 163, 0.7)',
+              'rgba(114, 9, 183, 0.7)'
+            ],
+            borderColor: [
+              'rgba(67, 97, 238, 1)',
+              'rgba(247, 37, 133, 1)',
+              'rgba(76, 201, 240, 1)',
+              'rgba(58, 12, 163, 1)',
+              'rgba(114, 9, 183, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Create line chart
+    function createLineChart() {
+      const lineCtx = document.getElementById('lineChart');
+      if (!lineCtx) return;
+      
+      if (lineChartInstance) {
+        lineChartInstance.destroy();
+      }
+      
+      // Generate timeline for last 6 months
+      const months = [];
+      const allocationsOverTime = [];
+      const today = new Date();
+      
+      for (let i = 5; i >= 0; i--) {
+        const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+        months.push(date.toLocaleDateString('en-US', { month: 'short' }));
+        allocationsOverTime.push(Math.floor(Math.random() * 8) + 2);
+      }
+      
+      lineChartInstance = new Chart(lineCtx.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Allocations per Month',
+            data: allocationsOverTime,
+            borderColor: 'rgba(67, 97, 238, 1)',
+            backgroundColor: 'rgba(67, 97, 238, 0.1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Setup form submission
+    function setupFormSubmission() {
+      const form = document.getElementById('resource_allocation_form');
+      if (!form) return;
+      
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        if (!isAuthenticated) {
+          showMessage('error', 'Please login first');
+          redirectToLogin();
+          return;
+        }
+        
+        if (!form.checkValidity()) {
+          e.stopPropagation();
+          form.classList.add('was-validated');
+          return;
+        }
+        
+        const projectId = document.getElementById('project_id').value.trim();
+        const itTeam = document.getElementById('it_team').value;
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+        
+        if (!projectId || !itTeam || !startDate || !endDate) {
+          showMessage('error', 'Please fill all required fields');
+          return;
+        }
+        
+        if (new Date(startDate) > new Date(endDate)) {
+          showMessage('error', 'Start date must be before end date');
+          return;
+        }
+        
+        const allocationData = {
+          projectId: projectId,
+          itTeam: itTeam,
+          startDate: startDate,
+          endDate: endDate,
+          status: "Active"
+        };
+        
+        try {
+          const response = await fetch(`${API_BASE_URL}/allocations`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(allocationData)
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            showMessage('success', 'Resource allocation saved successfully!');
+            form.reset();
+            form.classList.remove('was-validated');
+            
+            // Reset dates
+            const today = new Date().toISOString().split('T')[0];
+            const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            document.getElementById('start_date').value = today;
+            document.getElementById('end_date').value = nextWeek;
+            
+            // Refresh data
+            setTimeout(() => {
+              loadKPIData();
+              loadAllocationsTable();
+              loadAllocationsForChart();
+            }, 1000);
+          } else {
+            showMessage('error', result.message || 'Error saving allocation');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage('error', 'Network error. Please try again.');
+        }
+      });
+    }
+
+    // Show message
+    function showMessage(type, text) {
+      let messageDiv = document.getElementById('formMessage');
+      if (!messageDiv) {
+        messageDiv = document.createElement('div');
+        messageDiv.id = 'formMessage';
+        document.querySelector('#resource_allocation_form').appendChild(messageDiv);
+      }
+      
+      messageDiv.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+      messageDiv.innerHTML = `
+        <i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+        ${text}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      `;
+      messageDiv.style.display = 'block';
+      
+      setTimeout(() => {
+        if (messageDiv.style.display !== 'none') {
+          messageDiv.style.display = 'none';
+        }
+      }, 5000);
+    }
+
+    // Redirect to login
+    function redirectToLogin() {
+      console.log('Redirecting to login page...');
+      window.location.href = 'userlogin.html';
+    }
+
+    // Logout function
+    function logout() {
+      console.log('Logging out...');
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userData');
+      localStorage.removeItem('currentUser');
+      redirectToLogin();
+    }
+
+    // Initialize form submission after authentication
+    setTimeout(() => {
+      if (isAuthenticated) {
+        setupFormSubmission();
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

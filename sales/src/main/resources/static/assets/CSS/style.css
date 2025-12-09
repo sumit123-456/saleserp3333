@@ -1,0 +1,635 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
+}
+
+#wrapper {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 240px;
+  background-color: #212529;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1050;
+  overflow-y: auto;
+  transition: left 0.28s ease, transform 0.28s ease;
+}
+
+/* Sidebar brand / logo */
+#sidebar .sidebar-brand img {
+  height: 40px;
+  width: auto;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+#sidebar .nav-link {
+  color: white;
+      font-size: 15px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 4px;
+}
+
+#sidebar .nav-link:hover,
+#sidebar .nav-link.active {
+  color: #fff;
+  background-color: #495057;
+  border-radius: 8px;
+}
+
+#page-content {
+  flex-grow: 1;
+  margin-left: 240px; /* same as sidebar width */
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.28s ease;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+  height: 60px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+/* ===== Profile Circle ===== */
+#profileInitial {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+}
+
+/* Standardized Dashboard Cards */
+.dashboard-card {
+  min-height: 120px; /* same height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.dashboard-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-card.text-white {
+  color: #fff !important;
+}
+
+/* Ensure equal spacing in grid */
+.row.g-3 > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: subtle fade-in animation */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-card {
+  animation: fadeInCard 0.7s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    position: absolute;
+    width: 200px;
+    z-index: 100;
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+}
+
+
+/* --- UNIFIED LOGIN STYLES --- */
+.login-body {
+  background: linear-gradient(135deg, #007bff, #9162db);
+  height: 100vh;
+}
+
+.login-container {
+  height: 100vh;
+}
+
+.login-card {
+  width: 380px;
+  border-radius: 15px;
+  background-color: #fff;
+  animation: fadeInUp 0.8s ease;
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+a {
+  color: #4e9ff5;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- UNIFIED LOGIN STYLES --- */
+.login-body {
+  background: linear-gradient(135deg, #73abe7, #9169d3);
+  height: 100vh;
+}
+
+.login-container {
+  height: 100vh;
+}
+
+.login-card {
+  width: 380px;
+  border-radius: 15px;
+  background-color: #fff;
+  animation: fadeInUp 0.8s ease;
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+a {
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Dashboard Style Enhancements */
+.dashboard-header {
+  background: linear-gradient(90deg, #74a1d1, #8f67cf);
+  color: white;
+  padding: 15px 25px;
+}
+
+.dashboard-header .btn {
+  background: white;
+  color: #6610f2;
+  font-weight: 600;
+}
+
+.dashboard-header .btn:hover {
+  background: #f8f9fa;
+}
+
+/* Forgot Password Modal */
+.modal-content {
+  border-radius: 10px;
+}
+.modal-header {
+  border-bottom: none;
+}
+.modal-body button {
+  border-radius: 8px;
+}
+
+/* Chart Cards */
+.card {
+  border-radius: 12px;
+}
+.card-header {
+  font-weight: 600;
+}
+.card-body canvas {
+  width: 100% !important;
+}
+
+#salesTableBody tr {
+  transition: all 0.3s ease-in-out;
+}
+
+#salesTableBody tr:hover {
+  background-color: rgba(10, 10, 10, 0.05);
+}
+
+/* Custom Pagination Buttons */
+#prevPage, #nextPage {
+  background: linear-gradient(135deg, #4e95e0, #6610f2);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+#prevPage:hover, #nextPage:hover {
+  background: linear-gradient(135deg, #6610f2, #007bff);
+  transform: scale(1.05);
+}
+
+#prevPage:disabled, #nextPage:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.pagination .page-link {
+  color: #0d6efd;
+  border-radius: 50% !important;
+  width: 36px;
+  height: 36px;
+  text-align: center;
+  line-height: 35px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+}
+
+/* ===========================
+   📱 MOBILE RESPONSIVE STYLES
+   =========================== */
+
+/* MOBILE: hide sidebar off-canvas initially */
+@media (max-width: 991px) {
+  #sidebar {
+    left: -240px;
+  }
+  #sidebar.show {
+    left: 0;
+  }
+
+  /* Page content occupies full width on mobile */
+  #page-content {
+    margin-left: 0 !important;
+  }
+
+  /* Toggle button visible on mobile only (bootstrap utility used) */
+  #sidebarToggle {
+    display: inline-block;
+  }
+
+  /* overlay */
+  #sidebarOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1040;
+  }
+  #sidebarOverlay.active {
+    display: block;
+  }
+
+  /* Dashboard cards in 2 columns */
+  .dashboard-card {
+    text-align: center;
+  }
+
+  .row.g-3 > .col-md-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 576px) {
+  /* Dashboard cards in single column */
+  .row.g-3 > .col-md-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* Profile info hides text on very small screens */
+  #profileName, #profileEmail {
+    display: none;
+  }
+
+  /* Dropdown menu wider */
+  .dropdown-menu {
+    width: 100%;
+  }
+
+  /* Charts & Tables */
+  .card-body canvas {
+    height: auto !important;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  /* Sidebar links spacing */
+  #sidebar .nav-link {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+}
+
+/* Add smooth sidebar slide animation */
+#sidebar {
+  transition: all 0.3s ease;
+}
+
+/* Desktop: ensure toggle button hidden (Bootstrap d-lg-none handles this, but safe fallback) */
+@media (min-width: 992px) {
+  #sidebarToggle { display: none; }
+}
+
+/* ===============================
+   Align Sales Overview & Table
+   =============================== */
+@media (min-width: 992px) {
+  /* Make both cards stretch to same height */
+  .row.mt-4 > .col-lg-8,
+  .row.mt-4 > .col-lg-4 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row.mt-4 > .col-lg-8 .card,
+  .row.mt-4 > .col-lg-4 .card {
+    flex: 1;
+  }
+
+  /* Make table scrollable inside card */
+  #salesTableBody {
+    display: block;
+    max-height: calc(100% - 60px); /* subtract header/footer height */
+    overflow-y: auto;
+  }
+
+  #salesTable thead, #salesTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+/* Optional: Scrollbar styling for better look */
+#salesTableBody::-webkit-scrollbar {
+  width: 6px;
+}
+#salesTableBody::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* ===============================
+   Align Sales Overview & Table
+   =============================== */
+
+/* Desktop: Keep cards same height */
+@media (min-width: 992px) {
+  .row.mt-4 > .col-lg-8,
+  .row.mt-4 > .col-lg-4 {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row.mt-4 > .col-lg-8 .card,
+  .row.mt-4 > .col-lg-4 .card {
+    flex: 1;
+  }
+
+  /* Table scrollable */
+  #salesTableBody {
+    display: block;
+    max-height: calc(100% - 60px); /* adjust based on card header/footer */
+    overflow-y: auto;
+  }
+
+  #salesTable thead, #salesTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  /* Sticky table header */
+  #salesTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa; /* same as card header bg */
+    z-index: 2;
+  }
+}
+
+/* Mobile & Tablet: Stack cards, table scrollable horizontally */
+@media (max-width: 991px) {
+  #salesTableBody {
+    display: block;
+    max-height: 250px; /* fixed scrollable height for mobile */
+    overflow-y: auto;
+  }
+
+  #salesTable {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
+
+  #salesTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 2;
+  }
+
+  #salesTable tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+}
+
+/* Optional: Scrollbar styling */
+#salesTableBody::-webkit-scrollbar {
+  width: 6px;
+}
+#salesTableBody::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* Set a fixed height for the Sales Overview chart for desktop */
+#salesChart {
+  width: 100% !important;
+  height: 350px !important; /* Desktop height */
+}
+
+/* Mobile responsive height */
+@media (max-width: 991px) {
+  #salesChart {
+    height: 250px !important;
+  }
+}
+
+
+/* MOBILE: Center table headers and table cells */
+@media (max-width: 576px) {
+  #salesTable thead,
+  #salesTable tbody {
+    display: block; /* make table scrollable if needed */
+  }
+
+  #salesTable tr {
+    display: flex;
+    justify-content: center; /* horizontal center */
+    align-items: center;     /* vertical center */
+    text-align: center;
+    margin-bottom: 0.3rem;
+  }
+
+  #salesTable th,
+  #salesTable td {
+    flex: 1; /* each cell takes equal width */
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem;
+  }
+
+  /* Sticky header */
+  #salesTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 2;
+  }
+}
+
+/* Mobile: Align and enlarge Top 10 Performance chart perfectly */
+@media (max-width: 991px) {
+
+  /* Remove left/right gutter spacing from row */
+  .row.mt-4 > .col-lg-12 {
+    padding-right: 0 !important;  /* remove right padding */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Top 10 Performance chart sizing */
+  #topPerformanceChart {
+    width: 100% !important;         /* full width of container */
+    max-width: 100% !important;
+    height: 200px !important;       /* slightly taller */
+    display: block;
+    margin-left: 10px;
+    margin-right: auto;
+  }
+
+  /* Ensure card body and chart container take full width */
+  #topPerformanceChart ~ .card-body,
+  #topPerformanceChart ~ .card {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* Highlight active sidebar link */
+#sidebar .nav-link.active {
+  background-color: #898d92; /* Bootstrap primary color */
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Navbar: full heading visible on mobile */
+@media (max-width: 991px) {
+  .navbar .container-fluid {
+    flex-wrap: wrap; /* allow title + toggle + profile to wrap if needed */
+    justify-content: space-between; /* keep items spaced */
+  }
+
+  .navbar-brand {
+    font-size: 16px;
+    white-space: normal; /* allow full title on multiple lines if needed */
+  }
+
+  #profileInitial {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  /* Hide profile text on very small screens */
+  #profileName, #profileEmail {
+    display: none;
+  }
+
+  #sidebarToggle {
+    display: inline-block;
+  }
+}

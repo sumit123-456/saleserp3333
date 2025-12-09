@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Portal - Secure Login</title>
+  <link rel="icon" type="image/x-icon" href="assets/logo/Fevicon.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #73abe7, #9169d3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px 35px;
+      animation: fadeInUp 0.8s ease-out;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .login-header i {
+      font-size: 3rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .login-header h2 {
+      color: #2d3748;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .login-header p {
+      color: #718096;
+      font-size: 0.95rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .input-group-text {
+      background-color: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-right: none;
+    }
+
+    .password-toggle {
+      cursor: pointer;
+      color: #718096;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover {
+      color: #667eea;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      border: none;
+      padding: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .alert {
+      border-radius: 10px;
+      padding: 12px 15px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .remember-me {
+      font-size: 0.9rem;
+    }
+
+    .modal-header {
+      background: var(--primary-gradient);
+      color: white;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .input-group > .form-control {
+        border-radius: 0 10px 10px 0 !important; /* Fix for rounded corners */
+        border-left: none !important;
+    }
+    
+    .input-group > .input-group-text:first-child {
+        border-radius: 10px 0 0 10px !important;
+        border-right: 1.5px solid #e2e8f0 !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <i class="fas fa-user-shield"></i>
+        <h2>Employee Portal</h2>
+        <p>Secure login to access your workspace</p>
+      </div>
+
+      <div id="errorMessage" class="alert alert-danger d-none" role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span id="alertMessage">Login failed. Please try again.</span>
+      </div>
+
+      <form id="userLoginForm">
+        <div class="mb-3">
+          <label for="userEmail" class="form-label">Email Address</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            <input type="email" id="userEmail" class="form-control" placeholder="Enter your work email" required>
+          </div>
+          <div class="form-text">Use your company email address</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="userPassword" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+            <input type="password" id="userPassword" class="form-control" placeholder="Enter your password" required>
+            <span class="input-group-text password-toggle" id="togglePassword">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+          </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="form-check remember-me">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+          </div>
+          <div>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" class="text-decoration-none">
+              <i class="fas fa-key me-1"></i>Forgot Password?
+            </a>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" id="loginBtn">
+          <i class="fas fa-sign-in-alt me-2"></i>Login to Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal fade" id="forgotPasswordModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-key me-2"></i>Password Reset</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-3">Enter your email address and we'll send you a link to reset your password.</p>
+          <div class="mb-3">
+            <label for="forgotEmail" class="form-label">Email Address</label>
+            <input type="email" id="forgotEmail" class="form-control" placeholder="Enter your registered email">
+          </div>
+          <button id="resetPasswordBtn" class="btn btn-primary w-100">
+            <i class="fas fa-paper-plane me-2"></i>Send Reset Link
+          </button>
+          <div id="forgotMsg" class="mt-3 alert alert-success d-none" role="alert"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const API_BASE = 'http://localhost:9090'; // आपके Spring Boot Backend का URL
+    const errorDisplay = document.getElementById("errorMessage");
+    const alertMessageSpan = document.getElementById("alertMessage");
+    
+    function displayError(message) {
+        if (errorDisplay && alertMessageSpan) {
+            alertMessageSpan.textContent = message;
+            errorDisplay.classList.remove('d-none'); 
+            setTimeout(() => {
+                errorDisplay.classList.add('d-none');
+            }, 5000);
+        } else {
+             alert('❌ Error: ' + message); 
+        }
+    }
+
+    // ---------------------- User Login (API Integration) ----------------------
+    document.getElementById("userLoginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      
+      // Hide error alert before new attempt
+      if(errorDisplay) errorDisplay.classList.add('d-none'); 
+
+      const email = document.getElementById("userEmail").value.trim().toLowerCase();
+      const password = document.getElementById("userPassword").value.trim();
+
+      if (!email || !password) {
+        displayError("Please enter both email and password!");
+        return;
+      }
+
+      const payload = {
+        email: email,
+        password: password
+      };
+
+      console.log('Attempting login for:', email);
+      
+      // Login API Call
+      fetch(API_BASE + '/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      }).then(async (r) => {
+        const body = await r.json().catch(() => ({}));
+        
+        if (r.ok) {
+          // ⭐ FIX: Token और User Details को body.data से निकालें
+          const responseData = body.data; 
+          
+          if (!responseData || !responseData.token) {
+            displayError('Login failed: Token not received from server. Check server logs.');
+            return;
+          }
+
+          const token = responseData.token;
+          const userDetails = responseData; // contains userId, fullName, role etc.
+          
+          if (token) {
+            // Save Token and User Data
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('user', JSON.stringify(userDetails)); 
+            
+            let userRole = userDetails.role || 'EMPLOYEE';
+            
+            // Redirect based on role/email
+            console.log('Login successful. User Role:', userRole);
+            
+            if (userRole === 'ADMIN' || email.includes("admin")) {
+              window.location.href = "index.html"; // Admin/Management dashboard
+            } else if (email.includes("lead")) {
+              window.location.href = "projectlead.html";
+            } else if (email.includes("intake")) {
+              window.location.href = "projectintake.html";
+            } else if (email.includes("sales")) {
+              window.location.href = "salesperformance.html";
+            } else {
+              // Default for standard employees
+              window.location.href = "employee.html";
+            }
+            
+          } 
+
+        } else {
+          // Handle API errors (e.g., 401 Unauthorized)
+          const msg = body.message || body.error || 'Invalid email or password.';
+          displayError(msg);
+          console.error('Login error response:', body);
+        }
+      }).catch(err => {
+        console.error('Network error during login:', err);
+        displayError('Network Error: Could not connect to the server (' + API_BASE + ').');
+      });
+    });
+
+    // ---------------------- Forgot Password (Modal Logic) ----------------------
+    document.getElementById("resetPasswordBtn").addEventListener("click", function () {
+      const email = document.getElementById("forgotEmail").value.trim();
+      const forgotMsg = document.getElementById("forgotMsg");
+
+      if (email) {
+        forgotMsg.textContent = "✅ Reset link sent to " + email;
+        forgotMsg.classList.remove('d-none');
+        setTimeout(() => forgotMsg.classList.add('d-none'), 3000);
+        document.getElementById("forgotEmail").value = "";
+      } else {
+        alert("❌ Please enter your email!");
+      }
+    });
+
+    // ---------------------- Password Toggle ----------------------
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput = document.getElementById("userPassword");
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener("click", () => {
+                const type = passwordInput.type === "password" ? "text" : "password";
+                passwordInput.type = type;
+                const icon = togglePassword.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle("fa-eye");
+                    icon.classList.toggle("fa-eye-slash");
+                }
+            });
+        }
+        
+        // Prefill 'remember me' fields if present (using userEmail/userPassword IDs)
+        const savedUser = JSON.parse(localStorage.getItem("rememberedUser"));
+        if (savedUser) {
+          document.getElementById("userEmail").value = savedUser.email;
+          document.getElementById("userPassword").value = savedUser.password;
+          document.getElementById("rememberMe").checked = true;
+        }
+    });
+  </script>
+</body>
+
+</html>

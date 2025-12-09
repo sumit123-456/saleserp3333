@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sales ERP Dashboard</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="assets/img/Logo_English.png"
+    type="image/png">
+
+
+  <link rel="stylesheet" href="assets/CSS/employee.css">
+</head>
+
+<body>
+
+  <div id="wrapper">
+    <nav id="sidebar" class="bg-dark text-white p-3">
+      <div class="text-center mb-4">
+        <img src="assets/img/Logo_English.png" alt="Logo" class="img-fluid" style="max-height: 60px;">
+      </div>
+      <ul class="nav flex-column" id="sidebarMenu">
+        <li class="nav-item" id="menu-dashboard">
+          <a href="index.html" class="nav-link text-white">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="Employee.html" class="nav-link text-white">
+            <i class="bi bi-people-fill me-2"></i> Employees
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="ProjectLead.html" class="nav-link text-white">
+            <i class="bi bi-clipboard-check me-2"></i> Projects Leads
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="Projectintake.html" class="nav-link text-white">
+            <i class="bi bi-folder-plus me-2"></i> Project Intake
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="Salesperformance.html" class="nav-link text-white">
+            <i class="bi bi-folder-plus me-2"></i> Resource Allocation
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#formsSubmenu" role="button"
+            aria-expanded="false" aria-controls="formsSubmenu">
+            <i class="bi bi-ui-checks me-2"></i> Forms
+          </a>
+          <div class="collapse" id="formsSubmenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item">
+                <a href="user-registration.html" class="nav-link text-white">
+                  <i class="bi bi-person-plus-fill me-2"></i> New User Registration
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" data-bs-toggle="collapse" href="#settingsSubmenu" role="button"
+            aria-expanded="false" aria-controls="settingsSubmenu">
+            <i class="bi bi-gear-fill me-2"></i> Settings
+            <i class="bi bi-caret-down-fill ms-auto"></i>
+          </a>
+          <div class="collapse" id="settingsSubmenu">
+            <ul class="nav flex-column ms-3">
+              <li class="nav-item">
+                <a href="#" class="nav-link text-white logout-btn">
+                  <i class="bi bi-box-arrow-right me-2"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+
+    <div id="page-content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm px-3">
+        <div class="container-fluid">
+          <button class="btn btn-outline-secondary d-lg-none me-2" id="sidebarToggle">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <span class="navbar-brand fw-bold text-dark fs-5 me-auto">
+            Sales Employee Performance
+          </span>
+
+          <div class="dropdown ms-auto">
+            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="profileDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <div id="profileInitial"
+                class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center me-2"
+                style="width:40px;height:40px;font-size:18px;">A</div>
+              <div class="d-flex flex-column d-none d-sm-flex">
+                <span class="fw-semibold text-dark" id="navbarProfileName">User</span>
+                <small class="text-muted" id="navbarProfileEmail">user@email.com</small>
+              </div>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" style="min-width: 220px;">
+              <li class="dropdown-header text-center">
+                <div id="profileInitialBig"
+                  class="rounded-circle bg-primary text-white fw-bold d-flex align-items-center justify-content-center mx-auto mb-2"
+                  style="width:60px;height:60px;font-size:26px;">A</div>
+                <h6 class="mb-0" id="userName">User</h6>
+                <small class="text-muted" id="userEmail">user@email.com</small>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profileModal">
+                  <i class="bi bi-person-fill me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item text-danger logout-btn" href="#">
+                  <i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+      <div class="modal fade" id="profileModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">Profile Details & Settings</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="profileForm" novalidate>
+                <div class="row g-3 mb-4">
+                  <div class="col-md-6">
+                    <label for="profileName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="profileName" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="profileEmail" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profilePhone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="profilePhone" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="profileDept" class="form-label">Department</label>
+                    <input type="text" class="form-control" id="profileDept" required>
+                  </div>
+                </div>
+
+                <h6 class="fw-bold mb-3">Change Password</h6>
+                <div class="row g-3 mb-3">
+                  <div class="col-md-4">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword"
+                      placeholder="Enter current password">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                  </div>
+                </div>
+
+                <div id="passwordAlert" class="small text-danger mb-2" style="display:none;"></div>
+                <div id="passwordSuccess" class="small text-success mb-2" style="display:none;"></div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">Save Changes</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid p-4">
+        <main class="container-fluid p-3 p-lg-0">
+
+          <div class="row g-3 mb-4">
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-primary text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <h6>Total Calls</h6>
+                  <h3 id="kpiTotalCalls">0</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-success text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <h6>Calls Meet Target</h6>
+                  <h3 id="kpiSuccess">0%</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-warning text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <h6>Average Duration</h6>
+                  <h3 id="kpiDuration">0m 0s</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="card dashboard-card shadow-sm p-3 bg-danger text-white h-100"
+                style="border-radius: 12px; text-align: left;">
+                <div>
+                  <h6>Active Agents</h6>
+                  <h3 id="kpiAgents">0</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 mb-3 flex-wrap">
+        <button class="btn btn-outline-secondary" id="filterToggle">
+          <i class="fa-solid fa-filter me-1"></i> Show Filters
+        </button>
+        <button class="btn btn-outline-primary" id="dailyDetailsBtn">
+          <i class="fa-solid fa-calendar-day me-1"></i> Daily Call Details
+        </button>
+      </div>
+
+      <div id="filterFormContainer" class="card shadow-sm p-3 mb-3 d-none">
+        <h6><i class="fa-solid fa-magnifying-glass me-1"></i> Filter Calls</h6>
+        <form id="filterForm" class="row g-3 mt-1">
+          <div class="col-md-4">
+            <label class="form-label">Employee Name</label>
+            <input type="text" id="dailyAgent" class="form-control form-control-sm-mobile"
+              placeholder="Enter employee name" pattern="[a-zA-Z\s]+">
+            <div class="invalid-feedback">Please enter employee name (letters and spaces only).</div>
+          </div>
+
+          <div class="col-lg-4">
+            <label for="teamName" class="form-label">Team Name</label>
+            <select id="teamName" class="form-select form-select-sm-mobile">
+              <option value="">All Teams</option>
+              <option>Team A</option>
+              <option>Team B</option>
+              <option>Team C</option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Time Range</label>
+            <select id="timeRange" class="form-select">
+              <option value="today">Today</option>
+              <option value="7">Last 7 Days</option>
+              <option value="14">Last 14 Days</option>
+              <option value="30" selected>Last 30 Days</option>
+            </select>
+          </div>
+
+          <div class="button-row mt-3">
+            <button type="reset" class="btn btn-outline-secondary action-btn">Reset</button>
+            <button type="submit" class="btn btn-primary action-btn">Apply filter</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="dailyCallFormContainer" class="card shadow-sm border-0 rounded-3 p-4 mb-3 d-none">
+        <h6 class="mb-3">
+          <i class="fa-solid fa-phone-volume me-1 text-primary"></i> Daily Call Details
+        </h6>
+
+        <form id="dailyCallForm" class="row g-3 needs-validation" novalidate>
+
+          <div class="col-md-6">
+            <label class="form-label required">Employee Name</label>
+            <input type="text" id="EmployeesName" class="form-control form-control-sm-mobile"
+              placeholder="Enter employee name" pattern="^[A-Za-z\s]+$" required
+              oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');">
+            <div class="invalid-feedback">Please enter employee name (letters and spaces only).</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Total Calls</label>
+            <input type="number" id="dailyCalls" class="form-control form-control-sm-mobile"
+              placeholder="Enter total calls" required min="0">
+            <div class="invalid-feedback">Please enter total calls.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Successful Calls</label>
+            <input type="number" id="dailySuccessCalls" class="form-control form-control-sm-mobile"
+              placeholder="Enter successful calls" required min="0">
+            <div class="invalid-feedback">Please enter successful calls.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Average Duration (mins)</label>
+            <input type="number" id="dailyDuration" class="form-control form-control-sm-mobile"
+              placeholder="Enter avg duration" required min="0" step="0.01">
+            <div class="invalid-feedback">Please enter average duration.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Date</label>
+            <input type="date" id="dailyDate" class="form-control form-control-sm-mobile" required>
+            <div class="invalid-feedback">Please select a date.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Call Direction Split</label>
+            <select id="callDirection" class="form-select form-select-sm-mobile" required>
+              <option value="">Select call direction</option>
+              <option>Inbound Calls</option>
+              <option>Outbound Calls</option>
+            </select>
+            <div class="invalid-feedback">Please select a call direction.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Disposition Breakdown</label>
+            <select id="dispositionBreackdown" class="form-select form-select-sm-mobile" required>
+              <option value="">Select disposition breakdown</option>
+              <option>Missed Calls</option>
+              <option>Inbound Calls</option>
+              <option>Outbound Calls</option>
+            </select>
+            <div class="invalid-feedback">Please select disposition breakdown.</div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label required">Leads Generate</label>
+            <select id="leadsGenerate" class="form-select form-select-sm-mobile" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <div class="invalid-feedback">Please select Yes or No.</div>
+          </div>
+
+          <div id="leadDetailsSection" class="mt-3">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label required">Lead ID</label>
+                <input type="text" class="form-control form-control-sm-mobile" id="lead_id" placeholder="Enter lead ID"
+                  required>
+                <div class="invalid-feedback">Please enter lead ID.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Employee ID</label>
+                <input type="text" class="form-control form-control-sm-mobile" id="emp_id"
+                  placeholder="Enter employee ID (e.g., EMP02)" pattern="^[A-Z0-9]+$" required
+                  oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');">
+                <div class="invalid-feedback">Please enter employee ID (letters and numbers only, e.g., EMP02).</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Phone Number</label>
+                <input type="tel" class="form-control form-control-sm-mobile" id="phone_number"
+                  placeholder="Enter phone number" pattern="[0-9]{10}" maxlength="10" required>
+                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Lead Date</label>
+                <input type="date" class="form-control form-control-sm-mobile" id="lead_date" required>
+                <div class="invalid-feedback">Please select lead date.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Source</label>
+                <input type="text" class="form-control form-control-sm-mobile" id="source"
+                  placeholder="Enter lead source" pattern="^[A-Za-z\s]+$" required
+                  oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '');">
+                <div class="invalid-feedback">Please enter source (letters only).</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Converted to Deal</label>
+                <select class="form-select form-select-sm-mobile" id="converted_to_deal" required>
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+                <div class="invalid-feedback">Please select conversion status.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label required">Deal Value</label>
+                <input type="number" class="form-control form-control-sm-mobile" id="deal_value"
+                  placeholder="Enter deal value" min="0" required>
+                <div class="invalid-feedback">Please enter deal value.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 d-flex justify-content-end mt-3 flex-wrap gap-2">
+            <button type="reset" class="btn btn-outline-secondary btn-sm px-4">Reset</button>
+            <button type="submit" class="btn btn-primary btn-sm px-4">Submit</button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="card shadow-sm p-3 mb-4">
+        <h6>📞 Sales Calling Overview</h6>
+        <div class="chart-container" style="height:200px;">
+          <canvas id="chartjs-line"></canvas>
+        </div>
+      </div>
+
+
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6 col-md-12">
+          <div class="card shadow-sm p-3 h-100">
+            <h6>Monthly Top 5 Performers</h6>
+            <div class="chart-container">
+              <canvas id="topPerformers"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+          <div class="card shadow-sm p-3 h-100">
+            <h6>Monthly Bottom 5 Performers</h6>
+            <div class="chart-container">
+              <canvas id="bottomPerformers"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-4">
+
+        <div class="col-lg-4 col-md-6 col-12 d-flex">
+          <div class="card shadow-sm p-3 flex-fill d-flex flex-column">
+            <h6>Call Direction Split</h6>
+            <div class="chart-container flex-fill" style="height:350px;">
+              <canvas id="donutChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-12 d-flex">
+          <div class="card shadow-sm p-3 flex-fill d-flex flex-column">
+            <h6>Disposition Breakdown</h6>
+            <div class="chart-container flex-fill" style="height:350px;">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-12 d-flex">
+          <div class="card shadow-sm p-3 flex-fill d-flex flex-column justify-content-between">
+            <div>
+              <h6 class="mb-2">📊 Weekly Summary</h6>
+              <p class="small text-muted mb-2">Generated: <span id="generatedDate"></span></p>
+
+              <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+                <table id="summaryTable" class="table table-sm table-bordered align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Emp ID</th>
+                      <th>Name</th>
+                      <th>Team</th>
+                      <th>Monthly Target</th>
+                      <th>Achieved</th>
+                      <th>Calls Target</th>
+                      <th>Calls Made</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    </tbody>
+                </table>
+              </div>
+            </div>
+
+            <button id="downloadPdfBtn" class="btn btn-sm btn-outline-primary mt-3 align-self-start">
+              <i class="fa-solid fa-download me-1"></i> Download Report
+            </button>
+          </div>
+        </div>
+      </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ---------------------- Authentication and Profile Display Logic ----------------------
+
+    /**
+     * Checks if the user is authenticated (token exists) and redirects if not.
+     */
+    function checkAuthentication() {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.log('Authentication token missing. Redirecting to login.');
+        window.location.href = 'userlogin.html'; // Adjust if your login page is named differently
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * Handles user logout: clears tokens and redirects.
+     */
+    function logoutUser() {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        window.location.href = 'userlogin.html'; // Adjust if your login page is named differently
+    }
+
+    /**
+     * Updates the Navbar and Profile modal with user data from localStorage.
+     */
+    function updateProfileDisplay() {
+      const userDataString = localStorage.getItem('user');
+      
+      if (userDataString) {
+        try {
+          const user = JSON.parse(userDataString);
+          
+          // Fallback logic for display name
+          const name = user.fullName || user.email.split('@')[0];
+          const email = user.email || 'user@email.com';
+          const initial = name.charAt(0).toUpperCase();
+
+          // 1. Navbar Profile (Top Right)
+          const navbarName = document.getElementById('navbarProfileName');
+          if(navbarName) navbarName.textContent = name;
+          const navbarEmail = document.getElementById('navbarProfileEmail');
+          if(navbarEmail) navbarEmail.textContent = email;
+          const profileInitial = document.getElementById('profileInitial');
+          if(profileInitial) profileInitial.textContent = initial;
+
+          // 2. Dropdown Header
+          const userName = document.getElementById('userName');
+          if(userName) userName.textContent = name;
+          const userEmail = document.getElementById('userEmail');
+          if(userEmail) userEmail.textContent = email;
+          const profileInitialBig = document.getElementById('profileInitialBig');
+          if(profileInitialBig) profileInitialBig.textContent = initial;
+
+          // 3. Profile Modal Fields (Initial Load)
+          const profileNameInput = document.getElementById('profileName');
+          if (profileNameInput) profileNameInput.value = name;
+          const profileEmailInput = document.getElementById('profileEmail');
+          if (profileEmailInput) profileEmailInput.value = email;
+          
+          // Use user.phoneNumber and user.teamAllocation (from LoginResponse)
+          const profilePhoneInput = document.getElementById('profilePhone');
+          if (profilePhoneInput && user.phoneNumber) profilePhoneInput.value = user.phoneNumber;
+          const profileDeptInput = document.getElementById('profileDept');
+          if (profileDeptInput && user.teamAllocation) profileDeptInput.value = user.teamAllocation;
+
+          // ⭐ Daily Call Form - Employee Name Auto-fill ⭐
+          const employeeNameInput = document.getElementById('EmployeesName');
+          if (employeeNameInput) {
+            employeeNameInput.value = name;
+            employeeNameInput.readOnly = true; 
+          }
+          
+        } catch (e) {
+          console.log('Error parsing user data from localStorage:', e);
+          logoutUser();
+        }
+      } else {
+        console.log("Employee ; " , user);
+      }
+    }
+
+    // Attach logout function to all links with class 'logout-btn'
+    document.addEventListener('DOMContentLoaded', () => {
+        // Find all elements with class 'logout-btn' in the current document
+        document.querySelectorAll('.logout-btn').forEach(link => {
+            // Remove existing href attribute logic and add click listener
+            link.removeAttribute('href'); 
+            link.style.cursor = 'pointer'; // Ensure it looks clickable
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); 
+                logoutUser();
+            });
+        });
+    });
+
+    // Run on page load
+    window.onload = function() {
+      if (checkAuthentication()) {
+        updateProfileDisplay();
+        // The rest of the page setup (charts, table load) should be in assets/JS/employee.js
+      }
+    };
+    
+    // ---------------------- End of Profile Display Logic ----------------------
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="assets/JS/employee.js"></script>
+</body>
+
+</html>

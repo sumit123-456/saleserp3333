@@ -1,0 +1,510 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+}
+
+#wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  position: fixed;
+}
+
+/* Collapsed sidebar */
+#wrapper.sidebar-collapsed #sidebar {
+  width: 0;
+  overflow: hidden;
+}
+
+/* Page content */
+#page-content {
+  margin-left: 250px;   /* adjust to sidebar width */
+  transition: margin-left 0.3s; /* smooth when toggling sidebar */
+}
+
+/* When sidebar is collapsed, content takes full width */
+#wrapper.sidebar-collapsed #page-content {
+  margin-left: 0;
+}
+
+  /* Profile dropdown styling adjustments */
+  /* Hide the Admin text next to the initial on small screens */
+  #profileName {
+    display: none !important;
+  }
+
+  #profileInitial {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 16px !important;
+  }
+
+/* Responsive Sidebar/Layout */
+@media (max-width: 991.98px) {
+  
+  /* Reset page content margin for full width on mobile */
+  #page-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Sidebar positioning for mobile */
+  #sidebar {
+    left: -250px;
+  }
+  #sidebar.show {
+    left: 0;
+  }
+
+  /* Mobile Overlay when sidebar is open */
+  #page-content::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1039;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+  }
+  #page-content.sidebar-open::before {
+      opacity: 1;
+      pointer-events: auto;
+  }
+  
+  /* Navbar adjustments for mobile */
+  .navbar {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Standardized Dashboard Cards */
+.dashboard-card {
+  min-height: 120px; /* same height for all cards */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.dashboard-card h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-card.text-white {
+  color: #fff !important;
+}
+
+/* Ensure equal spacing in grid */
+.row.g-3 > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional: subtle fade-in animation */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-card {
+  animation: fadeInCard 0.7s ease-in-out;
+}
+
+
+ .chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card.h-100 {
+  display: flex;
+  flex-direction: column;
+}
+
+.card h6 {
+  flex: 0 0 auto;
+}
+
+.card .chart-container {
+  flex: 1 1 auto;
+  min-height: 300px; /* optional minimum height */
+}
+
+/* Removed the misplaced closing brace here */
+
+
+
+/* --- Compact filter dropdown styling --- */
+#filterFormContainer .form-label {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+#filterFormContainer .filter-pill {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+
+  padding: 4px 12px;          /* reduced padding */
+  font-size: 13px;            /* smaller font */
+  line-height: 1.2;
+  height: 34px;               /* compact height */
+  width: 100%;
+  box-shadow: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Focus & hover styling */
+#filterForm select {
+  box-sizing: border-box; /* include padding & border in width */
+  font-size: 1rem;        /* bigger text */
+  padding: 0.5rem 0.75rem;/* bigger padding */
+  height: 2.5rem;         /* taller box */
+  border-radius: 0.5rem;  /* rounded corners */
+}
+
+#filterFormContainer .filter-pill:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+}
+
+#filterFormContainer .filter-pill:hover {
+  border-color: #007bff;
+}
+
+/* Adjust dropdown arrow position */
+#filterFormContainer .filter-pill {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23007bff' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5.5l6 6 6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+  padding-right: 30px;
+}
+
+/* Responsive fine-tune for mobile view */
+@media (max-width: 480px) {
+  #filterFormContainer {
+    padding: 10px !important;
+  }
+
+  #filterFormContainer .filter-pill {
+    font-size: 12px;
+    height: 32px;
+  }
+
+  #filterFormContainer .form-label {
+    font-size: 12px;
+  }
+
+  #filterFormContainer .btn {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+}
+
+  /* Mobile-style select */
+  #filterStatus {
+    font-size: 0.85rem;      /* smaller text like mobile */
+    padding: 0.25rem 0.5rem; /* compact padding */
+    height: 2rem;            /* compact height */
+    border-radius: 0.5rem;   /* rounded corners */
+    min-width: 150px;        /* optional width */
+    border: 1px solid #ccc;  /* subtle border */
+    background-color: #fff;  /* white background */
+    appearance: none;        /* remove default arrow for cross-browser */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+  }
+
+  /* Optional: custom arrow like mobile */
+  #filterStatus::after {
+    content: "▼";           /* dropdown arrow */
+    float: right;
+    margin-right: 8px;
+    pointer-events: none;
+  }
+
+  /* Responsive: shrink width on smaller screens */
+  @media (max-width: 576px) {
+    #filterStatus {
+      width: 100%;           /* full width on mobile */
+    }
+  }
+
+
+/* Mobile-like select styling */
+  #filterDistribution {
+    font-size: 0.85rem;      /* smaller font like mobile */
+    padding: 0.25rem 0.5rem; /* compact padding */
+    height: 2rem;            /* compact height */
+    border-radius: 0.5rem;   /* rounded corners */
+    min-width: 150px;        /* optional: adjust width */
+  }
+
+  /* Optional: adjust arrow to look mobile-like */
+  #filterDistribution::-ms-expand {
+    display: none; /* remove default arrow in IE/Edge */
+  }
+
+/* Global box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Filter Form Card */
+  #filterFormContainer {
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  /* Labels */
+  #filterForm label {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  /* Selects */
+  #filterForm select {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.55rem 0.8rem;
+    height: 3rem;
+    border-radius: 0.6rem;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    transition: 0.2s all;
+  }
+
+  #filterForm select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+    outline: none;
+  }
+
+  /* Buttons */
+  #filterForm button {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.5rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    #filterForm select {
+      font-size: 0.95rem;
+      height: 2.6rem;
+      width: auto;
+    }
+    #filterForm button {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.7rem;
+    }
+  }
+
+  
+/* Ensure predictable sizing */
+#projectType,
+#projectStatus {
+  box-sizing: border-box;      /* include padding & border in width */
+  width: 100%;                 /* fill the column */
+  font-size: 1rem;             /* bigger, readable text */
+  height: 2.8rem;              /* taller box */
+  padding: 0.55rem 0.75rem;    /* inner spacing */
+  border-radius: 0.5rem;       /* rounded corners */
+  border: 1px solid #ced4da;   /* subtle border */
+  background-color: #fff;      /* white background */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus effect */
+#projectType:focus,
+#projectStatus:focus {
+  border-color: #0d6efd; 
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+
+/* Invalid feedback styling */
+.invalid-feedback {
+  font-size: 0.85rem;
+}
+
+/* Optional: responsive adjustments */
+@media (max-width: 576px) {
+  #projectType,
+  #projectStatus {
+    font-size: 0.95rem;
+    height: 2.5rem;
+    width: auto;
+  }
+}
+
+/* Highlight active sidebar link */
+#sidebar .nav-link.active {
+  background-color: #898d92; /* Bootstrap primary color */
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5PX;
+}
+
+/* ===== BUTTON ROW STYLING ===== */
+.button-row {
+  display: flex;
+  gap: 10px;               /* spacing between buttons */
+  justify-content: flex-end; /* align right on desktop */
+  flex-wrap: wrap;          /* allow wrap if needed */
+}
+
+/* Buttons style */
+.action-btn {
+  height: 36px;             /* desktop height */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  min-width: 100px;         /* consistent width on desktop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .button-row {
+    justify-content: flex-start; /* left align on mobile */
+    gap: 5px;                    /* smaller spacing */
+    width: 100%;
+  }
+
+  .button-row .action-btn {
+    flex: 1 1 48%;               /* two buttons per row */
+    min-width: auto;
+    font-size: 0.85rem;
+    height: 34px;                /* slightly smaller */
+  }
+}
+
+/* Optional mobile responsiveness */
+@media (max-width: 992px) {
+  #sidebar {
+    position: fixed;
+    top: 56px; /* Adjust to your navbar height */
+    left: -250px; /* Hidden by default */
+    height: calc(100vh - 56px); /* Full height minus navbar */
+    z-index: 1050;
+    background-color: #343a40; /* your sidebar color */
+    transition: left 0.3s ease;
+  }
+
+  #wrapper.sidebar-collapsed #sidebar {
+    left: 0; /* slide in */
+  }
+
+  #page-content {
+    margin-left: 0;
+  }
+}
+
+/* ===== Sidebar Mobile Fix (does NOT affect desktop) ===== */
+
+/* Only apply below 992px (Bootstrap's md breakpoint) */
+@media (max-width: 991px) {
+
+  /* Sidebar style in mobile view */
+  #sidebar {
+    position: fixed !important;
+    top: 0;
+    left: -250px; /* Hidden by default */
+    height: 100vh;
+    width: 250px;
+    background-color: #343a40; /* keep same as your sidebar */
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    z-index: 1050; /* above navbar */
+  }
+
+  /* Show sidebar when toggled */
+  #sidebar.show {
+    left: 0 !important;
+  }
+
+  /* Allow full scroll inside sidebar */
+  #sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+  }
+
+  /* Add dark overlay behind sidebar */
+  #page-content.sidebar-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1049; /* below sidebar */
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Hide overlay by default */
+  #page-content::before {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Push navbar behind sidebar when sidebar is open */
+  nav.navbar {
+    position: relative;
+    z-index: 1 !important;
+  }
+}
